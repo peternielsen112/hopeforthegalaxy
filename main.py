@@ -41,7 +41,7 @@ pizza = Actor('laser', (-WIDTH, -HEIGHT))
 pizza.active = False
 
 #x-wing
-rocketship = Actor('xwing', (WIDTH/2, HEIGHT))
+rocketship = Actor('falcon', (WIDTH/2, HEIGHT))
 rocketship.y = HEIGHT - rocketship.height/2
 
 
