@@ -4,6 +4,9 @@ import pgzrun
 import random
 import pygame
 
+import sys
+from pygame.locals import *
+
 #constants
 TITLE = 'Space Invaders: "A New Hope" Edition'
 
@@ -14,6 +17,7 @@ SPEED = 5
 ufo_speed = 9
 ufostart = (random.randint(1,250))
 
+bg = pygame.image.load("images\download.png")
 #music
 pygame.mixer.music.load('theme.mp3')
 pygame.mixer.music.play(loops=-1)
@@ -35,6 +39,8 @@ ufo.y = ufo.height/2
 
 ufo2 = Actor('tiefighter', (ufostart, 0))
 ufo2.y = ufo2.height/2
+
+bigufo = Actor('deethstarr', (ufostart, 0))
 
 #blasts
 pizza = Actor('laser', (-WIDTH, -HEIGHT))
@@ -111,6 +117,10 @@ def ufo_motion():
 	if ufo2.y > HEIGHT:
 		reset_ufo2()
 
+def deathstarmotion():
+	bigufo.y += SPEED
+	if bigufo.y > HEIGHT:
+		pygame.quit()
 
 #execute main functions
 def update():
@@ -124,9 +134,11 @@ def update():
 def draw():
 	screen.clear()
 	rocketship.draw()
-	ufo.draw()
+	if game.score < 20:
+		ufo.draw()
+		ufo2.draw()
 	pizza.draw()
-	ufo2.draw()
 	screen.draw.text(str(game.score), (WIDTH/20, HEIGHT/20))
-
+	if game.score >= 20:
+		bigufo.draw()
 pgzrun.go()
