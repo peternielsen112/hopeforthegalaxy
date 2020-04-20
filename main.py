@@ -67,7 +67,7 @@ def fire():
 def quad_motion():
 	if quadcannonblast.active == True:
 		quadcannonblast.y -= SPEED
-def fire-quad():
+def fire_quad():
 	quadcannonblast.x = rocketship.x
 	quadcannonblast.y = rocketship.y - rocketship.height/2 - quadcannonblast.height/2
 
@@ -80,9 +80,9 @@ def get_keyboard(SPEED):
 	elif keyboard.space:
 		pizza.active = True
 		fire()
-	elif keyboard.q:
+	elif keyboard.down:
 		quadcannonblast.active = True
-		fire-quad()
+		fire_quad()
 
 def reset_ufo():
 	ufo.y = 0
@@ -107,6 +107,10 @@ def reset_pizza():
 	pizza.pos = (-WIDTH, -HEIGHT)
 	pizza.active = False
 
+def reset_quad():
+	quadcannonblast.pos = (-WIDTH, -HEIGHT)
+	quadcannonblast.active = False
+
 def out_screen():
 	if rocketship.x > WIDTH:
 		rocketship_kill()
@@ -118,6 +122,14 @@ def test_hit():
 		reset_pizza()
 		game.score += 1
 	elif ufo2.colliderect(pizza):
+		reset_ufo2()
+		reset_pizza()
+		game.score += 1
+	elif ufo.colliderect(quadcannonblast):
+		reset_ufo()
+		reset_pizza()
+		game.score += 1
+	elif ufo2.colliderect(quadcannonblast):
 		reset_ufo2()
 		reset_pizza()
 		game.score += 1
@@ -143,6 +155,7 @@ def update():
 	out_screen()
 	ufo_get_past()
 	deathstarmotion()
+	quad_motion()
 
 def draw():
 	screen.clear()
