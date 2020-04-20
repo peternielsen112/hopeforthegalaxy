@@ -6,3 +6,5 @@
 
 
 # Hope you enjoy!
+
+# note: quad cannon laser must be resized
