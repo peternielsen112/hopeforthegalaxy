@@ -50,7 +50,7 @@ quadcannonblast = Actor('morelaser', (-WIDTH, -HEIGHT))
 quadcannonblast.active = False
 
 #x-wing
-rocketship = Actor('falcon', (WIDTH/2, HEIGHT))
+rocketship = Actor('razorcrest', (WIDTH/2, HEIGHT))
 rocketship.y = HEIGHT - rocketship.height/2
 
 
@@ -127,11 +127,11 @@ def test_hit():
 		game.score += 1
 	elif ufo.colliderect(quadcannonblast):
 		reset_ufo()
-		reset_pizza()
+		reset_quad()
 		game.score += 1
 	elif ufo2.colliderect(quadcannonblast):
 		reset_ufo2()
-		reset_pizza()
+		reset_quad()
 		game.score += 1
 
 def ufo_motion():
