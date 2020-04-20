@@ -46,6 +46,9 @@ bigufo = Actor('deethstarr', (ufostart, 0))
 pizza = Actor('laser', (-WIDTH, -HEIGHT))
 pizza.active = False
 
+quadcannonblast = Actor('morelaser', (-WIDTH, -HEIGHT))
+quadcannonblast.active = False
+
 #x-wing
 rocketship = Actor('falcon', (WIDTH/2, HEIGHT))
 rocketship.y = HEIGHT - rocketship.height/2
@@ -61,6 +64,13 @@ def fire():
 	pizza.x = rocketship.x
 	pizza.y = rocketship.y - rocketship.height/2 - pizza.height/2
 
+def quad_motion():
+	if quadcannonblast.active == True:
+		quadcannonblast.y -= SPEED
+def fire-quad():
+	quadcannonblast.x = rocketship.x
+	quadcannonblast.y = rocketship.y - rocketship.height/2 - quadcannonblast.height/2
+
 #x-wing movmement
 def get_keyboard(SPEED):
 	if keyboard.left:
@@ -70,6 +80,9 @@ def get_keyboard(SPEED):
 	elif keyboard.space:
 		pizza.active = True
 		fire()
+	elif keyboard.q:
+		quadcannonblast.active = True
+		fire-quad()
 
 def reset_ufo():
 	ufo.y = 0
