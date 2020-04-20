@@ -17,7 +17,7 @@ SPEED = 5
 ufo_speed = 9
 ufostart = (random.randint(1,250))
 
-bg = pygame.image.load("images\download.png")
+
 #music
 pygame.mixer.music.load('theme.mp3')
 pygame.mixer.music.play(loops=-1)
@@ -119,8 +119,7 @@ def ufo_motion():
 
 def deathstarmotion():
 	bigufo.y += SPEED
-	if bigufo.y > HEIGHT:
-		pygame.quit()
+
 
 #execute main functions
 def update():
@@ -130,6 +129,7 @@ def update():
 	test_hit()
 	out_screen()
 	ufo_get_past()
+	deathstarmotion()
 
 def draw():
 	screen.clear()
