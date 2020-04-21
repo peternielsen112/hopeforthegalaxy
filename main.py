@@ -50,11 +50,15 @@ quadcannonblast = Actor('morelaser', (-WIDTH, -HEIGHT))
 quadcannonblast.active = False
 
 #x-wing
-rocketship = Actor('razorcrest', (WIDTH/2, HEIGHT))
+rocketship = Actor('falcon', (WIDTH/2, HEIGHT))
 rocketship.y = HEIGHT - rocketship.height/2
 
 
 #define functions
+
+
+ufo_speed == game.score + 9
+
 
 #laser fires
 def pizza_motion():
