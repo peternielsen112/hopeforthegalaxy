@@ -7,4 +7,4 @@
 
 # Hope you enjoy!
 
-# note: quad cannon laser must be resized
+# NOTE: quad cannon laser ability [2 hit] variable problems exist. Hopefully will be fixed in later commits
