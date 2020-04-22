@@ -2,9 +2,17 @@
 import pgzrun
 import random
 import pygame
-
+import os
 import sys
+import pygame.locals as pl
 from pygame.locals import *
+
+
+#falcon
+#awing
+#xwing
+#razorcrest
+
 
 #constants
 TITLE = 'Space Invaders: "A New Hope" Edition'
@@ -15,6 +23,7 @@ HEIGHT = 683
 SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
+BACKGROUND_IMAGE = 'background'
 
 #music
 pygame.mixer.music.load('theme.mp3')
@@ -23,11 +32,17 @@ pygame.mixer.music.load('theme.mp3')
 #attributes for the game
 class Game():
     def __init__(self):
-    self.score = 0
-    self.level = 1
-    self.quaduse = 0
-
+        self.score = 0
+        self.level = 1
+        self.quaduse = 0
+        if len(sys.argv[1]) == 2:
+            self.ship = sys.argv[1]
+        else:
+            self.ship = 'xwing'
+#specify ship can be 'falcon', 'awing', 'razorcrest', or 'xwing'
 game = Game()
+
+
 
 #actors
 #bad guys
@@ -50,7 +65,7 @@ quadcannonblast = Actor('morelaser', (-WIDTH, -HEIGHT))
 quadcannonblast.active = False
 
 #x-wing
-ship = Actor('falcon', (WIDTH/2, HEIGHT))
+ship = Actor(game.ship, (WIDTH/2, HEIGHT))
 ship.y = HEIGHT - ship.height/2
 
 
@@ -63,14 +78,14 @@ tie_speed == game.score + 9
 #laser fires
 def laser_motion():
     if laser.active == True:
-    laser.y -= SPEED
+        laser.y -= SPEED
 def fire():
     laser.x = ship.x
     laser.y = ship.y - ship.height/2 - laser.height/2
 
 def quad_motion():
     if quadcannonblast.active == True:
-    quadcannonblast.y -= SPEED
+        quadcannonblast.y -= SPEED
 
 def fire_quad():
     quadcannonblast.x = ship.x
@@ -79,15 +94,15 @@ def fire_quad():
 #x-wing movmement
 def get_keyboard(SPEED):
     if keyboard.left:
-    ship.x -= SPEED
+        ship.x -= SPEED
     elif keyboard.right:
-    ship.x += SPEED
+        ship.x += SPEED
     elif keyboard.space:
-    laser.active = True
-    fire()
+        laser.active = True
+        fire()
     elif keyboard.down:
-    quadcannonblast.active = True
-    fire_quad()
+        quadcannonblast.active = True
+        fire_quad()
 
 def reset_tie():
     tie.y = 0
@@ -106,14 +121,14 @@ def ship_kill():
 
 def tie_get_past():
     if tie.y == HEIGHT:
-    reset_tie()
-    game.score -= 1
+        reset_tie()
+        game.score -= 1
     if tie2.y == HEIGHT:
-    reset_tie2()
-    game.score -= 1
+        reset_tie2()
+        game.score -= 1
     if tie3.y == HEIGHT:
-    reset_tie3()
-    game.score -= 1
+        reset_tie3()
+        game.score -= 1
 
 def reset_laser():
     laser.pos = (-WIDTH, -HEIGHT)
@@ -125,54 +140,54 @@ def reset_quad():
 
 def out_screen():
     if ship.x > WIDTH:
-    ship_kill()
-    game.score -= 1
+        ship_kill()
+        game.score -= 1
 
 def test_hit():
     if tie.colliderect(laser):
-    reset_tie()
-    reset_laser()
-    game.score += 1
+        reset_tie()
+        reset_laser()
+        game.score += 1
     elif tie2.colliderect(laser):
-    reset_tie2()
-    reset_laser()
-    game.score += 1
+        reset_tie2()
+        reset_laser()
+        game.score += 1
     elif tie3.colliderect(laser):
-    reset_tie3()
-    reset_laser()
-    game.score += 1
+        reset_tie3()
+        reset_laser()
+        game.score += 1
     elif tie.colliderect(quadcannonblast):
-    reset_tie()
-    game.quaduse += 1
+        reset_tie()
+        game.quaduse += 1
     if game.quaduse == 2:
-    reset_quad()
-    game.quaduse -= 2
-    game.score += 1
+        reset_quad()
+        game.quaduse -= 2
+        game.score += 1
     elif tie2.colliderect(quadcannonblast):
-    reset_tie2()
-    game.quaduse += 1
+        reset_tie2()
+        game.quaduse += 1
     if game.quaduse == 2:
-    reset_quad()
-    game.quaduse -= 2
-    game.score += 1
+        reset_quad()
+        game.quaduse -= 2
+        game.score += 1
     elif tie3.colliderect(quadcannonblast):
-    reset_tie3()
-    game.quaduse += 1
+        reset_tie3()
+        game.quaduse += 1
     if game.quaduse == 2:
-    reset_quad()
-    game.quaduse -= 2
-    game.score += 1
+        reset_quad()
+        game.quaduse -= 2
+        game.score += 1
 
 def tie_motion():
     tie.y += tie_speed/3
     if tie.y > HEIGHT:
-    reset_tie()
+        reset_tie()
     tie2.y += tie_speed/3
     if tie2.y > HEIGHT:
-    reset_tie2()
+        reset_tie2()
     tie3.y += tie_speed/3
     if tie3.y > HEIGHT:
-    reset_tie3()
+        reset_tie3()
 
 def deathstarmotion():
     bigtie.y += SPEED
@@ -191,6 +206,7 @@ def update():
 
 def draw():
     screen.clear()
+    screen.blit(BACKGROUND_IMAGE, (0,0))
     ship.draw()
     tie.draw()
     tie2.draw()
