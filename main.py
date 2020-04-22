@@ -13,27 +13,21 @@ TITLE = 'Space Invaders: "A New Hope" Edition'
 WIDTH = 384
 HEIGHT = 683
 SPEED = 5
-# all caps variable names indicate constants, i.e. values that are not meant to change throughout the course of the program (remove this comment when read)
-BACKGROUND_IMAGE = '384x683_59b31d_fff'
 tie_speed = 9
 tiestart = (random.randint(1,250))
 
-quaduse = 0
-
 #music
 pygame.mixer.music.load('theme.mp3')
-pygame.mixer.music.play(loops=-1)
-
-
+#pygame.mixer.music.play(loops=-1)
 
 #attributes for the game
 class Game():
-	def __init__(self):
-		self.score = 0
-		self.level = 1
+    def __init__(self):
+    self.score = 0
+    self.level = 1
+    self.quaduse = 0
 
 game = Game()
-
 
 #actors
 #bad guys
@@ -68,148 +62,147 @@ tie_speed == game.score + 9
 
 #laser fires
 def laser_motion():
-	if laser.active == True:
-		laser.y -= SPEED
+    if laser.active == True:
+    laser.y -= SPEED
 def fire():
-	laser.x = ship.x
-	laser.y = ship.y - ship.height/2 - laser.height/2
+    laser.x = ship.x
+    laser.y = ship.y - ship.height/2 - laser.height/2
 
 def quad_motion():
-	if quadcannonblast.active == True:
-		quadcannonblast.y -= SPEED
+    if quadcannonblast.active == True:
+    quadcannonblast.y -= SPEED
 
 def fire_quad():
-	quadcannonblast.x = ship.x
-	quadcannonblast.y = ship.y - ship.height/2 - quadcannonblast.height/2
+    quadcannonblast.x = ship.x
+    quadcannonblast.y = ship.y - ship.height/2 - quadcannonblast.height/2
 
 #x-wing movmement
 def get_keyboard(SPEED):
-	if keyboard.left:
-		ship.x -= SPEED
-	elif keyboard.right:
-		ship.x += SPEED
-	elif keyboard.space:
-		laser.active = True
-		fire()
-	elif keyboard.down:
-		quadcannonblast.active = True
-		fire_quad()
+    if keyboard.left:
+    ship.x -= SPEED
+    elif keyboard.right:
+    ship.x += SPEED
+    elif keyboard.space:
+    laser.active = True
+    fire()
+    elif keyboard.down:
+    quadcannonblast.active = True
+    fire_quad()
 
 def reset_tie():
-	tie.y = 0
-	tie.x = random.randint(0 + tie.width, WIDTH - tie.width)
+    tie.y = 0
+    tie.x = random.randint(0 + tie.width, WIDTH - tie.width)
 
 def reset_tie2():
-	tie2.y = 0
-	tie2.x = random.randint(0 + tie.width, WIDTH - tie.width)
+    tie2.y = 0
+    tie2.x = random.randint(0 + tie.width, WIDTH - tie.width)
 
 def reset_tie3():
-	tie3.y = 0
-	tie3.x = random.randint(0 + tie.width, WIDTH - tie.width)
+    tie3.y = 0
+    tie3.x = random.randint(0 + tie.width, WIDTH - tie.width)
 
 def ship_kill():
-	ship.x = WIDTH/2
+    ship.x = WIDTH/2
 
 def tie_get_past():
-	if tie.y == HEIGHT:
-		reset_tie()
-		game.score -= 1
-	if tie2.y == HEIGHT:
-		reset_tie2()
-		game.score -= 1
-	if tie3.y == HEIGHT:
-		reset_tie3()
-		game.score -= 1
+    if tie.y == HEIGHT:
+    reset_tie()
+    game.score -= 1
+    if tie2.y == HEIGHT:
+    reset_tie2()
+    game.score -= 1
+    if tie3.y == HEIGHT:
+    reset_tie3()
+    game.score -= 1
 
 def reset_laser():
-	laser.pos = (-WIDTH, -HEIGHT)
-	laser.active = False
+    laser.pos = (-WIDTH, -HEIGHT)
+    laser.active = False
 
 def reset_quad():
-	quadcannonblast.pos = (-WIDTH, -HEIGHT)
-	quadcannonblast.active = False
+    quadcannonblast.pos = (-WIDTH, -HEIGHT)
+    quadcannonblast.active = False
 
 def out_screen():
-	if ship.x > WIDTH:
-		ship_kill()
-		game.score -= 1
+    if ship.x > WIDTH:
+    ship_kill()
+    game.score -= 1
 
 def test_hit():
-	if tie.colliderect(laser):
-		reset_tie()
-		reset_laser()
-		game.score += 1
-	elif tie2.colliderect(laser):
-		reset_tie2()
-		reset_laser()
-		game.score += 1
-	elif tie3.colliderect(laser):
-		reset_tie3()
-		reset_laser()
-		game.score += 1
-	elif tie.colliderect(quadcannonblast):
-		reset_tie()
-		quaduse += 1
-		if quaduse == 2:
-			reset_quad()
-			quaduse -= 2
-		game.score += 1
-	elif tie2.colliderect(quadcannonblast):
-		reset_tie2()
-		quaduse += 1
-		if quaduse == 2:
-			reset_quad()
-			quaduse -= 2
-		game.score += 1
-	elif tie3.colliderect(quadcannonblast):
-		reset_tie3()
-		quaduse += 1
-		if quaduse == 2:
-			reset_quad()
-			quaduse -= 2
-		game.score += 1
+    if tie.colliderect(laser):
+    reset_tie()
+    reset_laser()
+    game.score += 1
+    elif tie2.colliderect(laser):
+    reset_tie2()
+    reset_laser()
+    game.score += 1
+    elif tie3.colliderect(laser):
+    reset_tie3()
+    reset_laser()
+    game.score += 1
+    elif tie.colliderect(quadcannonblast):
+    reset_tie()
+    game.quaduse += 1
+    if game.quaduse == 2:
+    reset_quad()
+    game.quaduse -= 2
+    game.score += 1
+    elif tie2.colliderect(quadcannonblast):
+    reset_tie2()
+    game.quaduse += 1
+    if game.quaduse == 2:
+    reset_quad()
+    game.quaduse -= 2
+    game.score += 1
+    elif tie3.colliderect(quadcannonblast):
+    reset_tie3()
+    game.quaduse += 1
+    if game.quaduse == 2:
+    reset_quad()
+    game.quaduse -= 2
+    game.score += 1
 
 def tie_motion():
-	tie.y += tie_speed/3
-	if tie.y > HEIGHT:
-		reset_tie()
-	tie2.y += tie_speed/3
-	if tie2.y > HEIGHT:
-		reset_tie2()
-	tie3.y += tie_speed/3
-	if tie3.y > HEIGHT:
-		reset_tie3()
+    tie.y += tie_speed/3
+    if tie.y > HEIGHT:
+    reset_tie()
+    tie2.y += tie_speed/3
+    if tie2.y > HEIGHT:
+    reset_tie2()
+    tie3.y += tie_speed/3
+    if tie3.y > HEIGHT:
+    reset_tie3()
 
 def deathstarmotion():
-	bigtie.y += SPEED
+    bigtie.y += SPEED
 
 
 #execute main functions
 def update():
-	get_keyboard(SPEED)
-	tie_motion()
-	laser_motion()
-	test_hit()
-	out_screen()
-	tie_get_past()
-	deathstarmotion()
-	quad_motion()
+    get_keyboard(SPEED)
+    tie_motion()
+    laser_motion()
+    test_hit()
+    out_screen()
+    tie_get_past()
+    deathstarmotion()
+    quad_motion()
 
 def draw():
-	screen.clear()
-	screen.blit(BACKGROUND_IMAGE, (0,0))
-	ship.draw()
-	tie.draw()
-	tie2.draw()
-	tie3.draw()
+    screen.clear()
+    ship.draw()
+    tie.draw()
+    tie2.draw()
+    tie3.draw()
 #	if game.score < 20:
 #		tie.draw()
 #		tie2.draw()
-	laser.draw()
-	laser.draw()
-	laser.draw()
-	quadcannonblast.draw()
-	screen.draw.text(str(game.score), (WIDTH/20, HEIGHT/20))
+    laser.draw()
+    laser.draw()
+    laser.draw()
+    quadcannonblast.draw()
+    screen.draw.text(str(game.score), (WIDTH/20, HEIGHT/20))
 #	if game.score >= 20:
 #		bigtie.draw()
 pgzrun.go()
