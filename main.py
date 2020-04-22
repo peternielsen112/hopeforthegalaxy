@@ -1,4 +1,3 @@
-
 #import images
 import pgzrun
 import random
@@ -14,6 +13,8 @@ TITLE = 'Space Invaders: "A New Hope" Edition'
 WIDTH = 384
 HEIGHT = 683
 SPEED = 5
+# all caps variable names indicate constants, i.e. values that are not meant to change throughout the course of the program (remove this comment when read)
+BACKGROUND_IMAGE = '384x683_59b31d_fff'
 tie_speed = 9
 tiestart = (random.randint(1,250))
 
@@ -196,6 +197,7 @@ def update():
 
 def draw():
 	screen.clear()
+	screen.blit(BACKGROUND_IMAGE, (0,0))
 	ship.draw()
 	tie.draw()
 	tie2.draw()
