@@ -6,10 +6,11 @@ import os
 import sys
 import pygame.locals as pl
 from pygame.locals import *
+import pickle
+#from moveables import tie, tie2, tie3, ship, laser, quadcannonblast, protontorp, ion, game
 
 
 #constants
-TITLE = 'Space Invaders: "A New Hope" Edition'
 WIDTH = 384
 HEIGHT = 683
 SPEED = 5
@@ -225,6 +226,24 @@ def tie_motion():
         game.score -= 200
 
 
+#level-changing code
+if game.level == 1:
+    BACKGROUND_IMAGE = "background"
+    TITLE = 'Hope for the Galaxy: Level 1'
+    game.score = 0
+    if game.score >= 5000:
+        game.level = 2
+elif game.level == 2:
+    BACKGROUND_IMAGE = "trench"
+    TITLE = 'Hope for the Galaxy: Level 2'
+    game.score = 0
+    if game.score >= 500000:
+        game.view = 'win'
+
+
+
+
+
 #execute main functions
 #update
 def update():
@@ -239,7 +258,12 @@ def update():
 #draw
 def draw():
     screen.clear()
-    screen.blit(BACKGROUND_IMAGE, (0,0))
+    if game.score <= 5000:
+        game.level = 1
+        screen.blit('background', (0,0))
+    elif game.score > 5000:
+        game.level = 2
+        screen.blit('trench', (0,0))
     ship.draw()
     tie.draw()
     tie2.draw()
