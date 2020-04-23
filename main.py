@@ -35,7 +35,12 @@ class Game():
         self.score = 0
         self.level = 1
         self.quaduse = 0
-        if len(sys.argv[1]) == 2:
+        self.view = 'splash'
+        if sys.argv[1] == 'xwing':
+            self.ship = sys.argv[1]
+        elif sys.argv[1] == 'falcon':
+            self.ship = sys.argv[1]
+        elif sys.argv[1] == 'awing':
             self.ship = sys.argv[1]
         else:
             self.ship = 'xwing'
@@ -64,6 +69,12 @@ laser.active = False
 quadcannonblast = Actor('morelaser', (-WIDTH, -HEIGHT))
 quadcannonblast.active = False
 
+ion = Actor('ion', (-WIDTH, -HEIGHT))
+ion.active = False
+
+protontorp = Actor('torp', (-WIDTH, -HEIGHT))
+protontorp.active = False
+
 #x-wing
 ship = Actor(game.ship, (WIDTH/2, HEIGHT))
 ship.y = HEIGHT - ship.height/2
@@ -72,7 +83,7 @@ ship.y = HEIGHT - ship.height/2
 #define functions
 
 
-tie_speed == game.score + 9
+tie_speed == (game.score/300) + 9
 
 
 #laser fires
@@ -86,10 +97,21 @@ def fire():
 def quad_motion():
     if quadcannonblast.active == True:
         quadcannonblast.y -= SPEED
-
 def fire_quad():
     quadcannonblast.x = ship.x
     quadcannonblast.y = ship.y - ship.height/2 - quadcannonblast.height/2
+def ion_motion():
+    if ion.active == True:
+        ion.y -= SPEED
+def fire_ion():
+    ion.x = ship.x
+    ion.y = ship.y - ship.height/2 - ion.height/2
+def protontorp_motion():
+    if protontorp.active == True:
+        protontorp.y -= SPEED
+def fire_protontorp():
+    protontorp.x = ship.x
+    protontorp.y = ship.y - ship.height/2 - protontorp.height/2
 
 #x-wing movmement
 def get_keyboard(SPEED):
@@ -100,10 +122,18 @@ def get_keyboard(SPEED):
     elif keyboard.space:
         laser.active = True
         fire()
-    elif keyboard.down:
-        quadcannonblast.active = True
-        fire_quad()
-
+    if game.ship == 'falcon':
+        if keyboard.down:
+            quadcannonblast.active = True
+            fire_quad()
+    elif game.ship == 'awing':
+        if keyboard.down:
+            ion.active = True
+            fire_ion()
+    elif game.ship == 'xwing':
+        if keyboard.down:
+            protontorp.active = True
+            fire_protontorp()
 def reset_tie():
     tie.y = 0
     tie.x = random.randint(0 + tie.width, WIDTH - tie.width)
@@ -118,17 +148,8 @@ def reset_tie3():
 
 def ship_kill():
     ship.x = WIDTH/2
+    game.score -= 100
 
-def tie_get_past():
-    if tie.y == HEIGHT:
-        reset_tie()
-        game.score -= 1
-    if tie2.y == HEIGHT:
-        reset_tie2()
-        game.score -= 1
-    if tie3.y == HEIGHT:
-        reset_tie3()
-        game.score -= 1
 
 def reset_laser():
     laser.pos = (-WIDTH, -HEIGHT)
@@ -138,59 +159,91 @@ def reset_quad():
     quadcannonblast.pos = (-WIDTH, -HEIGHT)
     quadcannonblast.active = False
 
+def reset_ion():
+    ion.pos = (-WIDTH, -HEIGHT)
+    ion.active = False
+
+def reset_torp():
+    protontorp.pos = (-WIDTH, -HEIGHT)
+    protontorp.active = False
+
 def out_screen():
     if ship.x > WIDTH:
         ship_kill()
-        game.score -= 1
+        game.score -= 100
 
 def test_hit():
     if tie.colliderect(laser):
         reset_tie()
         reset_laser()
-        game.score += 1
+        game.score += 100
     elif tie2.colliderect(laser):
         reset_tie2()
         reset_laser()
-        game.score += 1
+        game.score += 100
     elif tie3.colliderect(laser):
         reset_tie3()
         reset_laser()
-        game.score += 1
+        game.score += 100
     elif tie.colliderect(quadcannonblast):
         reset_tie()
         game.quaduse += 1
-    if game.quaduse == 2:
-        reset_quad()
-        game.quaduse -= 2
-        game.score += 1
+        game.score += 250
+        if game.quaduse == 2:
+            reset_quad()
+            game.quaduse -= 2
+
     elif tie2.colliderect(quadcannonblast):
         reset_tie2()
         game.quaduse += 1
-    if game.quaduse == 2:
-        reset_quad()
-        game.quaduse -= 2
-        game.score += 1
+        game.score += 250
+        if game.quaduse == 2:
+            reset_quad()
+            game.quaduse -= 2
+
     elif tie3.colliderect(quadcannonblast):
         reset_tie3()
         game.quaduse += 1
-    if game.quaduse == 2:
-        reset_quad()
-        game.quaduse -= 2
-        game.score += 1
+        game.score += 250
+        if game.quaduse == 2:
+            reset_quad()
+            game.quaduse -= 2
+    elif tie.colliderect(ion):
+        reset_tie()
+        reset_tie2()
+        reset_tie3()
+        game.score += 1000
+    elif tie.colliderect(protontorp):
+        reset_tie()
+        game.score += 100
+    elif tie2.colliderect(protontorp):
+        reset_tie2()
+        game.score += 100
+    elif tie3.colliderect(protontorp):
+        reset_tie3()
+        game.score += 100
+
+
+
 
 def tie_motion():
     tie.y += tie_speed/3
     if tie.y > HEIGHT:
         reset_tie()
+        game.score -= 200
     tie2.y += tie_speed/3
     if tie2.y > HEIGHT:
         reset_tie2()
+        game.score -= 200
     tie3.y += tie_speed/3
     if tie3.y > HEIGHT:
         reset_tie3()
+        game.score -= 200
 
 def deathstarmotion():
     bigtie.y += SPEED
+    if bigtie.y > HEIGHT:
+        pass
 
 
 #execute main functions
@@ -200,9 +253,10 @@ def update():
     laser_motion()
     test_hit()
     out_screen()
-    tie_get_past()
     deathstarmotion()
     quad_motion()
+    protontorp_motion()
+    ion_motion()
 
 def draw():
     screen.clear()
@@ -215,9 +269,9 @@ def draw():
 #		tie.draw()
 #		tie2.draw()
     laser.draw()
-    laser.draw()
-    laser.draw()
     quadcannonblast.draw()
+    ion.draw()
+    protontorp.draw()
     screen.draw.text(str(game.score), (WIDTH/20, HEIGHT/20))
 #	if game.score >= 20:
 #		bigtie.draw()
