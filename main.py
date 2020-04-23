@@ -233,7 +233,6 @@ def update():
     laser_motion()
     test_hit()
     out_screen()
-    deathstarmotion()
     quad_motion()
     protontorp_motion()
     ion_motion()
