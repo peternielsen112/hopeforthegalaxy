@@ -11,8 +11,8 @@ import pickle
 
 
 #constants
-WIDTH = 384
-HEIGHT = 683
+WIDTH = 492
+HEIGHT = 294
 SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
@@ -21,7 +21,7 @@ BACKGROUND_IMAGE = 'background'
 
 #music
 pygame.mixer.music.load('theme.mp3')
-pygame.mixer.music.play(loops=-1)
+#pygame.mixer.music.play(loops=-1)
 
 
 #game attributes [score, level, ship, etc]
@@ -110,6 +110,11 @@ def get_keyboard(SPEED):
     elif keyboard.space:
         laser.active = True
         fire()
+    elif keyboard.down:
+        if game.view == 'splash':
+            game.view == 'level-1'
+        else:
+            pass
     if game.ship == 'falcon':
         if keyboard.down:
             quadcannonblast.active = True
@@ -226,24 +231,6 @@ def tie_motion():
         game.score -= 200
 
 
-#level-changing code
-if game.level == 1:
-    BACKGROUND_IMAGE = "background"
-    TITLE = 'Hope for the Galaxy: Level 1'
-    game.score = 0
-    if game.score >= 5000:
-        game.level = 2
-elif game.level == 2:
-    BACKGROUND_IMAGE = "trench"
-    TITLE = 'Hope for the Galaxy: Level 2'
-    game.score = 0
-    if game.score >= 500000:
-        game.view = 'win'
-
-
-
-
-
 #execute main functions
 #update
 def update():
@@ -257,22 +244,24 @@ def update():
     ion_motion()
 #draw
 def draw():
-    screen.clear()
-    if game.score <= 5000:
-        game.level = 1
+    if game.view == 'level-1':
+        screen.clear()
         screen.blit('background', (0,0))
-    elif game.score > 5000:
-        game.level = 2
-        screen.blit('trench', (0,0))
-    ship.draw()
-    tie.draw()
-    tie2.draw()
-    tie3.draw()
-    laser.draw()
-    quadcannonblast.draw()
-    ion.draw()
-    protontorp.draw()
-    screen.draw.text(str(game.score), (WIDTH/20, HEIGHT/20))
+        ship.draw()
+        tie.draw()
+        tie2.draw()
+        tie3.draw()
+        laser.draw()
+        quadcannonblast.draw()
+        ion.draw()
+        protontorp.draw()
+        screen.draw.text(str(game.score), (WIDTH/20, HEIGHT/20))
+    elif game.view == 'splash':
+        screen.clear()
+        screen.blit('logo', (0,0))
+        screen.draw.text(str('<Press the UP key to begin>'), (WIDTH/2, HEIGHT - 15))
+    else:
+        pass
 
 
 #wrap up
