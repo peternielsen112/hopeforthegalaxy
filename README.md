@@ -1,10 +1,13 @@
-# This is a version of Space Invaders but with some Star Wars tweaks.
-
-# Currently working on adding new ships. You start with the x-wing and you can work your way up the line, with iconic options like the Millenium Falcon or the Razor Crest.
-
-# In addition, powerups/abilities are being worked on.
+# This GitHub repository is an in-progress game called Hope for the Galaxy. It is mainly based off of the canonical Star Wars material.
 
 
-# Hope you enjoy!
+# Currently available:
+# Choosing ships from the command line. You may choose 'awing', 'falcon', or 'xwing'. In the event that no choice is made or something invalid is given, the x-wing acts as default.
+# Special abilities and universal fire. Pressing space shoots a laser blast at incoming tie fighters. Pressing the down key fires a quad-laser for the Millennium Falcon, an ion blast for the a-wing, and a proton torpedo for the x-wing.
 
-# NOTE: quad cannon laser ability [2 hit] variable problems exist. Hopefully will be fixed in later commits
+
+# Currently in progress:
+# Adding a start screen and levels via game.view
+
+# Likely developments in the future:
+# The adding of allies, the death star, and Yavin. Potentially other planets or missions.
