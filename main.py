@@ -259,7 +259,7 @@ def draw():
     elif game.view == 'splash':
         screen.clear()
         screen.blit('logo', (0,0))
-        screen.draw.text(str('<Press the UP key to begin>'), (WIDTH/2, HEIGHT - 15))
+        screen.draw.text(str('<Press the DOWN key to begin>'), (WIDTH - 300, HEIGHT - 15))
     else:
         pass
 
