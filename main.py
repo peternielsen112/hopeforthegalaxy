@@ -7,6 +7,7 @@ import sys
 import pygame.locals as pl
 from pygame.locals import *
 import pickle
+import time
 #from moveables import tie, tie2, tie3, ship, laser, quadcannonblast, protontorp, ion, game
 
 
