@@ -18,7 +18,7 @@ SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
 BACKGROUND_IMAGE = 'background'
-if sys.argv > 0:
+if sys.argv >= 1:
     shipchoice = sys.argv[1]
 else:
     shipchoice = 'xwing'
