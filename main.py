@@ -18,13 +18,16 @@ SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
 BACKGROUND_IMAGE = 'background'
-
-
+if sys.argv > 0:
+    shipchoice = sys.argv[1]
+else:
+    shipchoice = 'xwing'
 #music
 pygame.mixer.music.load('theme.mp3')
 #pygame.mixer.music.play(loops=-1)
 
-
+t1 = time.time()
+print(t1)
 #game attributes [score, level, ship, etc]
 class Game():
     def __init__(self):
@@ -33,11 +36,11 @@ class Game():
         self.quaduse = 0
         self.view = 'splash'
         if sys.argv[1] == 'xwing':
-            self.ship = sys.argv[1]
+            self.ship = shipchoice
         elif sys.argv[1] == 'falcon':
-            self.ship = sys.argv[1]
+            self.ship = shipchoice
         elif sys.argv[1] == 'awing':
-            self.ship = sys.argv[1]
+            self.ship = shipchoice
         else:
             self.ship = 'xwing'
 game = Game()
