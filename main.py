@@ -18,13 +18,16 @@ SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
 BACKGROUND_IMAGE = 'background'
-if sys.argv >= 1:
-    shipchoice = sys.argv[1]
-else:
-    shipchoice = 'xwing'
+# if sys.argv >= 1:
+#     shipchoice = sys.argv[1]
+# else:
+#     shipchoice = 'xwing'
+
+shipchoice = sys.argv[1]
+
 #music
 pygame.mixer.music.load('theme.mp3')
-#pygame.mixer.music.play(loops=-1)
+pygame.mixer.music.play(loops=-1)
 
 t1 = time.time()
 print(t1)
@@ -34,7 +37,7 @@ class Game():
         self.score = 0
         self.level = 1
         self.quaduse = 0
-        self.view = 'splash'
+        self.view = 'level-1'     #to test game mechanics - must be set to 'splash' in order for full functionality to be used
         if sys.argv[1] == 'xwing':
             self.ship = shipchoice
         elif sys.argv[1] == 'falcon':
@@ -117,20 +120,21 @@ def get_keyboard(SPEED):
     elif keyboard.down:
         if game.view == 'splash':
             game.view == 'level-1'
+        elif game.view == 'level-1':
+            if game.ship == 'falcon':
+                quadcannonblast.active = True
+                fire_quad()
+            elif game.ship == 'awing':
+                ion.active = True
+                fire_ion()
+            elif game.ship == 'xwing':
+                protontorp.active = True
+                fire_protontorp()
+            else:
+                pass
         else:
             pass
-    if game.ship == 'falcon':
-        if keyboard.down:
-            quadcannonblast.active = True
-            fire_quad()
-    elif game.ship == 'awing':
-        if keyboard.down:
-            ion.active = True
-            fire_ion()
-    elif game.ship == 'xwing':
-        if keyboard.down:
-            protontorp.active = True
-            fire_protontorp()
+
 
 
 #resets
