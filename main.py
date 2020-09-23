@@ -18,7 +18,7 @@ SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
 BACKGROUND_IMAGE = 'background'
-if len(sys.argv) >= 1:
+if len(sys.argv) >= 2:
     shipchoice = sys.argv[1]
 else:
     shipchoice = 'xwing'
@@ -39,12 +39,13 @@ class Game():
         self.quaduse = 0
         #self.view = 'level-1'     #to test game mechanics - must be set to 'splash' in order for full functionality to be used
         self.view = 'splash'
-        if sys.argv[1] == 'xwing':
-            self.ship = shipchoice
-        elif sys.argv[1] == 'falcon':
-            self.ship = shipchoice
-        elif sys.argv[1] == 'awing':
-            self.ship = shipchoice
+        if len(sys.argv) >= 2:
+            if sys.argv[1] == 'xwing':
+                self.ship = shipchoice
+            elif sys.argv[1] == 'falcon':
+                self.ship = shipchoice
+            elif sys.argv[1] == 'awing':
+                self.ship = shipchoice
         else:
             self.ship = 'xwing'
 game = Game()
