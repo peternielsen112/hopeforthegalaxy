@@ -18,12 +18,12 @@ SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
 BACKGROUND_IMAGE = 'background'
-# if sys.argv >= 1:
-#     shipchoice = sys.argv[1]
-# else:
-#     shipchoice = 'xwing'
+if len(sys.argv) >= 1:
+    shipchoice = sys.argv[1]
+else:
+    shipchoice = 'xwing'
 
-shipchoice = sys.argv[1]
+#shipchoice = sys.argv[1]
 
 #music
 pygame.mixer.music.load('theme.mp3')
@@ -37,7 +37,8 @@ class Game():
         self.score = 0
         self.level = 1
         self.quaduse = 0
-        self.view = 'level-1'     #to test game mechanics - must be set to 'splash' in order for full functionality to be used
+        #self.view = 'level-1'     #to test game mechanics - must be set to 'splash' in order for full functionality to be used
+        self.view = 'splash'
         if sys.argv[1] == 'xwing':
             self.ship = shipchoice
         elif sys.argv[1] == 'falcon':
@@ -119,7 +120,7 @@ def get_keyboard(SPEED):
         fire()
     elif keyboard.down:
         if game.view == 'splash':
-            game.view == 'level-1'
+            game.view = 'level-1'
         elif game.view == 'level-1':
             if game.ship == 'falcon':
                 quadcannonblast.active = True
