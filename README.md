@@ -1,4 +1,4 @@
-# This GitHub repository is a game called Hope for the Galaxy. It is mainly based off of the canonical Star Wars material.
+# Hope For the Galaxy
 
 [![Github All Releases](https://img.shields.io/github/downloads/peternielsen112/hopeforthegalaxy/total.svg)](https://github.com/peternielsen112/hopeforthegalaxy/releases)
 [![GitHub release](https://img.shields.io/github/release/peternielsen112/hopeforthegalaxy/all.svg)](https://github.com/peternielsen112/hopeforthegalaxy/releases)
