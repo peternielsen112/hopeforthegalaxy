@@ -6,7 +6,6 @@ import os
 import sys
 import pygame.locals as pl
 from pygame.locals import *
-import pickle
 import time
 #from moveables import tie, tie2, tie3, ship, laser, quadcannonblast, protontorp, ion, game
 
@@ -17,7 +16,6 @@ HEIGHT = 600
 SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
-BACKGROUND_IMAGE = 'background'
 if len(sys.argv) >= 2:
     shipchoice = sys.argv[1]
 else:
@@ -56,6 +54,7 @@ class Game():
             self.ship = 'xwing'
 game = Game()
 
+BACKGROUND_IMAGE = f'background{game.level}'
 
 def game_end():
     time.sleep(1)
