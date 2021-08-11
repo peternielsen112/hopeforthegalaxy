@@ -11,8 +11,8 @@ import time
 
 
 #constants
-WIDTH = 500
-HEIGHT = 600
+WIDTH = 585
+HEIGHT = 700
 SPEED = 5
 tie_speed = 9
 tiestart = (random.randint(1,250))
@@ -20,6 +20,8 @@ if len(sys.argv) >= 2:
     shipchoice = sys.argv[1]
 else:
     shipchoice = 'xwing'
+
+
 
 #shipchoice = sys.argv[1]
 
@@ -50,6 +52,14 @@ class Game():
                 self.ship = shipchoice
             elif sys.argv[1] == 'awing':
                 self.ship = shipchoice
+            elif sys.argv[1] == 'ywing':
+                self.ship = shipchoice
+            elif sys.argv[1] == 'razorcrest':
+                self.ship = shipchoice
+            elif sys.argv[1] == 'givemepowers':
+                self.ship = 'deethstarr'
+            else:
+                self.ship = 'xwing'
         else:
             self.ship = 'xwing'
 game = Game()
@@ -58,7 +68,10 @@ BACKGROUND_IMAGE = f'background{game.level}'
 
 def game_end():
     time.sleep(1)
-    print(f'\n\nLevel 1 Complete!')
+    if game.end == True:
+        print(f'\n\nLevel 1 Complete!')
+    else:
+        pass
     print(f'\n\n\n\nFinal Stats:\n\nScore: {game.score}\nTies Hit: {game.hitsHit}\nDeaths: {game.deaths}\nTies Let Through: {game.tiesLet}')
     quit()
 
@@ -133,6 +146,7 @@ def get_keyboard(SPEED):
     elif keyboard.down:
         if game.view == 'splash':
             game.view = 'level-1'
+            game.tiesLet = 0
         elif game.view == 'level-1':
             if game.ship == 'falcon':
                 quadcannonblast.active = True
@@ -154,13 +168,13 @@ def get_keyboard(SPEED):
 #tie fighters
 def reset_tie():
     tie.y = 0
-    tie.x = random.randint(0 + tie.width, WIDTH - tie.width)
+    tie.x = random.randint(0, WIDTH)
 def reset_tie2():
     tie2.y = 0
-    tie2.x = random.randint(0 + tie.width, WIDTH - tie.width)
+    tie2.x = random.randint(0,WIDTH)
 def reset_tie3():
     tie3.y = 0
-    tie3.x = random.randint(0 + tie.width, WIDTH - tie.width)
+    tie3.x = random.randint(0,WIDTH)
 #player's ship
 def ship_kill():
     ship.x = WIDTH/2
@@ -224,7 +238,7 @@ def test_hit():
         reset_tie2()
         game.quaduse += 1
         game.score += 100
-        print(f'Tie 1 Killed with Quad Blast. Added {addQuad2Score} points.')
+        print(f'Tie 2 Killed with Quad Blast. Added {addQuad2Score} points.')
         if game.quaduse == 2:
             reset_quad()
             game.quaduse -= 2
@@ -234,7 +248,7 @@ def test_hit():
         reset_tie3()
         game.quaduse += 1
         game.score += 100
-        print(f'Tie 1 Killed with Quad Blast. Added {addQuad3Score} points.')
+        print(f'Tie 3 Killed with Quad Blast. Added {addQuad3Score} points.')
         if game.quaduse == 2:
             reset_quad()
             game.quaduse -= 2
@@ -329,7 +343,7 @@ def update():
 def draw():
     if game.view == 'level-1':
         screen.clear()
-        screen.blit('background', (0,0))
+        screen.blit(BACKGROUND_IMAGE, (0,0))
         ship.draw()
         tie.draw()
         tie2.draw()
