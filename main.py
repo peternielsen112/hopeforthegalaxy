@@ -1,4 +1,12 @@
-#import commands
+'''
+Hope for the Galaxy
+A Game by Peter Nielsen (@peternielsen112)
+This game is licensed under a GPL-3.0 License.
+For How to Play, see the README.md file.
+If you encounter a bug or have a suggestion, see README.md for instructions.
+'''
+
+# import statements
 import pgzrun
 import random
 import pygame
@@ -7,7 +15,6 @@ import sys
 import pygame.locals as pl
 from pygame.locals import *
 import time
-#from moveables import tie, tie2, tie3, ship, laser, quadcannonblast, protontorp, ion, game
 
 
 #constants
@@ -21,13 +28,9 @@ if len(sys.argv) >= 2:
 else:
     shipchoice = 'xwing'
 
-
-
-#shipchoice = sys.argv[1]
-
-#music
-# pygame.mixer.music.load('theme.mp3')
-# pygame.mixer.music.play(loops=-1)
+# music
+pygame.mixer.music.load('theme.mp3')
+pygame.mixer.music.play(loops=-1)
 
 t1 = time.time()
 print(t1)
@@ -185,6 +188,11 @@ def out_screen():
     if ship.x > WIDTH:
         ship_kill()
         game.score -= 100
+    elif ship.x < 0:
+        ship_kill()
+        game.score -= 100
+    else:
+        pass
 #weaponry
 def reset_laser():
     laser.pos = (-WIDTH, -HEIGHT)
@@ -207,7 +215,7 @@ def test_hit():
         reset_tie()
         reset_laser()
         game.score += addScore
-        print(f'Tie 3 Killed with Laser. Added {addScore} points.')
+        print(f'Tie 1 Killed with Laser. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser):
         add2Score = round(150 + tie3.x / 5)
@@ -278,17 +286,56 @@ def test_hit():
         print(f'Tie 3 hit with Ion Blast. All Ties killed. Added {addIon3Score} points.')
         game.hitsHit += 3
     elif tie.colliderect(protontorp):
+        addProtonScore = round(100 + tie.x / 5)
         reset_tie()
-        game.score += 100
+        game.score += addProtonScore
         game.hitsHit += 1
+        print(f'Tie 1 hit with Proton Torpedo. Added {addProtonScore} points.')
     elif tie2.colliderect(protontorp):
+        addProton2Score = round(100 + tie2.x / 5)
         reset_tie2()
         game.score += 100
         game.hitsHit += 1
+        print(f'Tie 2 hit with Proton Torpedo. Added {addProton2Score} points.')
     elif tie3.colliderect(protontorp):
+        addProton3Score = round(100 + tie3.x / 5)
         reset_tie3()
         game.score += 100
         game.hitsHit += 1
+        print(f'Tie 3 hit with Proton Torpedo. Added {addProton3Score} points.')
+    elif tie.colliderect(ship):
+        if len(sys.argv) > 2:
+            if sys.argv[1] == 'givemepowers':
+                reset_tie()
+            else:
+                reset_tie()
+                ship_kill()
+        else:
+            reset_tie()
+            ship_kill()
+    elif tie2.colliderect(ship):
+        if len(sys.argv) > 2:
+            if sys.argv[1] == 'givemepowers':
+                reset_tie2()
+            else:
+                reset_tie2()
+                ship_kill()
+        else:
+            reset_tie2()
+            ship_kill()
+    elif tie3.colliderect(ship):
+        if len(sys.argv) > 2:
+            if sys.argv[1] == 'givemepowers':
+                reset_tie3()
+            else:
+                reset_tie3()
+                ship_kill()
+        else:
+            reset_tie3()
+            ship_kill()
+    else:
+        pass
+
 
 
 def stopScoreFromZero():
@@ -358,8 +405,8 @@ def draw():
         screen.draw.text(str(f'Ties Escaped: {game.tiesLet}'), (WIDTH/20, HEIGHT/10))
     elif game.view == 'splash':
         screen.clear()
-        screen.blit('logo', (0,0))
-        screen.draw.text(str('<Press the DOWN key to begin>'), (WIDTH / 2, HEIGHT - 15))
+        screen.blit('logo', (WIDTH * 0.08,HEIGHT/3))
+        screen.draw.text(str('<Press the DOWN key to begin>'), (WIDTH - 400, HEIGHT - 30))
     else:
         pass
 
