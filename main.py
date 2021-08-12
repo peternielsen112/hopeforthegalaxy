@@ -71,11 +71,13 @@ BACKGROUND_IMAGE = f'background{game.level}'
 
 def game_end():
     time.sleep(1)
+    t2 = time.time()
+    t3 = t2-t1
     if game.end == True:
         print(f'\n\nLevel 1 Complete!')
     else:
         pass
-    print(f'\n\n\n\nFinal Stats:\n\nScore: {game.score}\nTies Hit: {game.hitsHit}\nDeaths: {game.deaths}\nTies Let Through: {game.tiesLet}')
+    print(f'\n\n\n\nFinal Stats:\n\nScore: {game.score}\nTies Hit: {game.hitsHit}\nDeaths: {game.deaths}\nTies Let Through: {game.tiesLet}\nGame Total Time: {t3}')
     quit()
 
 #actors
@@ -121,6 +123,8 @@ protontorp.active = False
 ship = Actor(game.ship, (WIDTH/2, HEIGHT))
 ship.y = HEIGHT - ship.height/2
 
+bomb = Actor('bomb', (-WIDTH,-HEIGHT))
+bomb.active = False
 
 #set tie fighter speed
 tie_speed == (game.score/300) + 9
@@ -202,6 +206,12 @@ def protontorp_motion():
 def fire_protontorp():
     protontorp.x = ship.x
     protontorp.y = ship.y - ship.height/2 - protontorp.height/2
+def bomb_motion():
+    if bomb.active == True:
+        bomb.y -= SPEED
+def fire_bomb():
+    bomb.x = ship.x
+    bomb.y = ship.y-ship.height/2-protontorp.height/2
 
 
 #movement and keyboard input
@@ -259,6 +269,9 @@ def get_keyboard(SPEED):
             elif game.ship == 'xwing':
                 protontorp.active = True
                 fire_protontorp()
+            elif game.ship == 'ywing':
+                bomb.active = True
+                fire_bomb()
             else:
                 pass
         else:
@@ -291,7 +304,6 @@ def ship_kill():
     ship.x = WIDTH/2
     game.score -= 100
     game.deaths += 1
-    print(f'Deaths: {game.deaths}')
 def out_screen():
     if ship.x > WIDTH:
         ship_kill()
@@ -338,6 +350,9 @@ def reset_ion():
 def reset_torp():
     protontorp.pos = (-WIDTH, -HEIGHT)
     protontorp.active = False
+def reset_bomb():
+    bomb.pos = (-WIDTH, -HEIGHT)
+    bomb.active = False
 
 
 #check for hits
@@ -347,196 +362,168 @@ def test_hit():
         reset_tie()
         reset_laser()
         game.score += addScore
-        print(f'Tie 1 Killed with Laser. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser()
         game.score += add2Score
-        print(f'Tie 2 Killed with Laser. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser2):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser2()
         game.score += addScore
-        print(f'Tie 1 Killed with Laser 2. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser2):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser2()
         game.score += add2Score
-        print(f'Tie 2 Killed with Laser 2. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser2):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser2()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 2. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser3):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser3()
         game.score += addScore
-        print(f'Tie 1 Killed with Laser 3. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser3):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser3()
         game.score += add2Score
-        print(f'Tie 2 Killed with Laser 3. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser3):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser3()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 3. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser4):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser4()
         game.score += addScore
-        print(f'Tie 3 Killed with Laser 4. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser4):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser4()
         game.score += add2Score
-        print(f'Tie 3 Killed with Laser 4. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser4):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser4()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 4. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser5):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser5()
         game.score += addScore
-        print(f'Tie 3 Killed with Laser 5. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser5):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser5()
         game.score += add2Score
-        print(f'Tie 3 Killed with Laser 5. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser5):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser5()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 5. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser6):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser6()
         game.score += addScore
-        print(f'Tie 3 Killed with Laser 6. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser6):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser6()
         game.score += add2Score
-        print(f'Tie 3 Killed with Laser 6. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser6):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser6()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 6. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser7):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser7()
         game.score += addScore
-        print(f'Tie 3 Killed with Laser 7. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser7):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser7()
         game.score += add2Score
-        print(f'Tie 3 Killed with Laser 7. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser7):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser7()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 7. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser8):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser8()
         game.score += addScore
-        print(f'Tie 3 Killed with Laser 8. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser8):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser8()
         game.score += add2Score
-        print(f'Tie 3 Killed with Laser 8. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser8):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser8()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 8. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(laser9):
         addScore = round(150 + tie.x / 5)
         reset_tie()
         reset_laser9()
         game.score += addScore
-        print(f'Tie 3 Killed with Laser 9. Added {addScore} points.')
         game.hitsHit += 1
     elif tie2.colliderect(laser9):
         add2Score = round(150 + tie3.x / 5)
         reset_tie2()
         reset_laser9()
         game.score += add2Score
-        print(f'Tie 3 Killed with Laser 9. Added {add2Score} points.')
         game.hitsHit += 1
     elif tie3.colliderect(laser9):
         add3Score = round(150 + tie3.x / 5)
         reset_tie3()
         reset_laser9()
         game.score += add3Score
-        print(f'Tie 3 Killed with Laser 9. Added {add3Score} points.')
         game.hitsHit += 1
     elif tie.colliderect(quadcannonblast):
         addQuadScore = round(100 + tie.x / 5)
         reset_tie()
         game.quaduse += 1
         game.score += addQuadScore
-        print(f'Tie 1 Killed with Quad Blast. Added {addQuadScore} points.')
         if game.quaduse == 2:
             reset_quad()
             game.quaduse -= 2
@@ -546,7 +533,6 @@ def test_hit():
         reset_tie2()
         game.quaduse += 1
         game.score += 100
-        print(f'Tie 2 Killed with Quad Blast. Added {addQuad2Score} points.')
         if game.quaduse == 2:
             reset_quad()
             game.quaduse -= 2
@@ -556,7 +542,6 @@ def test_hit():
         reset_tie3()
         game.quaduse += 1
         game.score += 100
-        print(f'Tie 3 Killed with Quad Blast. Added {addQuad3Score} points.')
         if game.quaduse == 2:
             reset_quad()
             game.quaduse -= 2
@@ -567,7 +552,6 @@ def test_hit():
         reset_tie2()
         reset_tie3()
         game.score += addIonScore
-        print(f'Tie 1 hit with Ion Blast. All Ties killed. Added {addIonScore} points.')
         game.hitsHit += 3
     elif tie2.colliderect(ion):
         addIon2Score = round(100 + ((tie3.x + tie2.x + tie.x) / 5))
@@ -575,7 +559,6 @@ def test_hit():
         reset_tie2()
         reset_tie3()
         game.score += addIon2Score
-        print(f'Tie 2 hit with Ion Blast. All Ties killed. Added {addIon2Score} points.')
         game.hitsHit += 3
     elif tie3.colliderect(ion):
         addIon3Score = round(100 + ((tie3.x + tie2.x + tie.x) / 5))
@@ -583,26 +566,40 @@ def test_hit():
         reset_tie2()
         reset_tie3()
         game.score += addIon3Score
-        print(f'Tie 3 hit with Ion Blast. All Ties killed. Added {addIon3Score} points.')
         game.hitsHit += 3
     elif tie.colliderect(protontorp):
         addProtonScore = round(100 + tie.x / 5)
         reset_tie()
         game.score += addProtonScore
         game.hitsHit += 1
-        print(f'Tie 1 hit with Proton Torpedo. Added {addProtonScore} points.')
     elif tie2.colliderect(protontorp):
         addProton2Score = round(100 + tie2.x / 5)
         reset_tie2()
-        game.score += 100
+        game.score += addProton2Score
         game.hitsHit += 1
-        print(f'Tie 2 hit with Proton Torpedo. Added {addProton2Score} points.')
     elif tie3.colliderect(protontorp):
         addProton3Score = round(100 + tie3.x / 5)
         reset_tie3()
-        game.score += 100
+        game.score += addProton3Score
         game.hitsHit += 1
-        print(f'Tie 3 hit with Proton Torpedo. Added {addProton3Score} points.')
+    elif tie.colliderect(bomb):
+        addBombScore = round(100 + tie.x/5)
+        reset_tie()
+        reset_bomb()
+        game.score += addBombScore
+        game.hitsHit += 1
+    elif tie2.colliderect(bomb):
+        addBomb2Score = round(100 + tie2.x/5)
+        reset_tie2()
+        reset_bomb()
+        game.score += addBomb2Score
+        game.hitsHit += 1
+    elif tie3.colliderect(bomb):
+        addBomb3Score = round(100 + tie3.x/5)
+        reset_tie3()
+        reset_bomb()
+        game.score += addBomb3Score
+        game.hitsHit += 1
     elif tie.colliderect(ship):
         if len(sys.argv) > 2:
             if sys.argv[1] == 'givemepowers':
@@ -683,6 +680,7 @@ def update():
     quad_motion()
     protontorp_motion()
     ion_motion()
+    bomb_motion()
     stopScoreFromZero()
     if game.level == 1:
         if game.level1quota <= game.hitsHit:
@@ -764,6 +762,7 @@ def draw():
         quadcannonblast.draw()
         ion.draw()
         protontorp.draw()
+        bomb.draw()
         screen.draw.text(str(f'Score: {game.score}'), (WIDTH/20, HEIGHT/20))
         screen.draw.text(str(f'Ties Killed: {game.hitsHit}'), (WIDTH/20, HEIGHT/30 - 5))
         screen.draw.text(str(f'Deaths: {game.deaths}'), (WIDTH/20, HEIGHT/10 - 15))
