@@ -126,11 +126,28 @@ ship.y = HEIGHT - ship.height/2
 bomb = Actor('bomb', (-WIDTH,-HEIGHT))
 bomb.active = False
 
+razorlaser = Actor('tielaser', (-WIDTH,-HEIGHT))
+razorlaser.active = True
 #set tie fighter speed
 tie_speed == (game.score/300) + 9
 
 
 #laser functions
+def razorlaser_motion(dir):
+    if razorlaser.active == True:
+        if dir == 1:
+            razorlaser.y -= SPEED
+        elif dir == 2:
+            razorlaser.y += SPEED
+        elif dir == 3:
+            razorlaser.x -= SPEED
+        elif dir == 4:
+            razorlaser.x += SPEED
+        else:
+            pass
+def fireRazorLaser(dir):
+    razorlaser.x = ship.x
+    razorlaser.y = ship.y - ship.height/2 - razorlaser.height/2
 def laser_motion():
     if laser.active == True:
         laser.y -= SPEED
@@ -217,44 +234,56 @@ def fire_bomb():
 #movement and keyboard input
 def get_keyboard(SPEED):
     if keyboard.left:
-        ship.x -= SPEED
-    elif keyboard.right:
-        ship.x += SPEED
-    elif keyboard.space:
-        if laser.active == True:
-            if laser2.active == True:
-                if laser3.active == True:
-                    if laser4.active == True:
-                        if laser5.active == True:
-                            if laser6.active == True:
-                                if laser7.active  == True:
-                                    if laser8.active == True:
-                                        laser9.active = True
-                                        fire9()
-                                    else:
-                                        laser8.active = True
-                                        fire8()
-                                else:
-                                    laser7.active = True
-                                    fire7()
-                            else:
-                                laser6.active = True
-                                fire6()
-                        else:
-                            laser5.active = True
-                            fire5()
-                    else:
-                        laser4.active = True
-                        fire4()
-                else:
-                    laser3.active = True
-                    fire3()
-            else:
-                laser2.active = True
-                fire2()
+        if game.ship == 'razorcrest':
+            ship.image = 'razorcrestleft'
+            ship.x -= SPEED
         else:
-            laser.active = True
-            fire()
+            ship.x -= SPEED
+    elif keyboard.right:
+        if game.ship == 'razorcrest':
+            ship.image = 'razorcrestright'
+            ship.x += SPEED
+        else:
+            ship.x += SPEED
+    elif keyboard.space:
+        if game.ship == 'razorcrest':
+            razorlaser.active = True
+            fireRazorLaser()
+        else:
+            if laser.active == True:
+                if laser2.active == True:
+                    if laser3.active == True:
+                        if laser4.active == True:
+                            if laser5.active == True:
+                                if laser6.active == True:
+                                    if laser7.active  == True:
+                                        if laser8.active == True:
+                                            laser9.active = True
+                                            fire9()
+                                        else:
+                                            laser8.active = True
+                                            fire8()
+                                    else:
+                                        laser7.active = True
+                                        fire7()
+                                else:
+                                    laser6.active = True
+                                    fire6()
+                            else:
+                                laser5.active = True
+                                fire5()
+                        else:
+                            laser4.active = True
+                            fire4()
+                    else:
+                        laser3.active = True
+                        fire3()
+                else:
+                    laser2.active = True
+                    fire2()
+            else:
+                laser.active = True
+                fire()
     elif keyboard.down:
         if game.view == 'splash':
             game.view = 'level-1'
@@ -272,10 +301,19 @@ def get_keyboard(SPEED):
             elif game.ship == 'ywing':
                 bomb.active = True
                 fire_bomb()
+            elif game.ship == 'razorcrest':
+                ship.image = 'razorcrestdown'
+                ship.y += SPEED
             else:
                 pass
         else:
             pass
+    elif keyboard.up:
+        if game.ship == 'razorcrest':
+            ship.image = 'razorcrest'
+            ship.y -= SPEED
+    else:
+        pass
 
 
 
@@ -302,6 +340,7 @@ def reset_tie3():
 #player's ship
 def ship_kill():
     ship.x = WIDTH/2
+    ship.y = HEIGHT - ship.height/2
     game.score -= 100
     game.deaths += 1
 def out_screen():
@@ -309,6 +348,12 @@ def out_screen():
         ship_kill()
         game.score -= 100
     elif ship.x < 0:
+        ship_kill()
+        game.score -= 100
+    elif ship.y < 0:
+        ship_kill()
+        game.score -= 100
+    elif ship.y > HEIGHT:
         ship_kill()
         game.score -= 100
     else:
@@ -353,6 +398,9 @@ def reset_torp():
 def reset_bomb():
     bomb.pos = (-WIDTH, -HEIGHT)
     bomb.active = False
+def reset_razorlaser():
+    razorlaser.pos = (-WIDTH,-HEIGHT)
+    razorlaser.active = False
 
 
 #check for hits
@@ -600,6 +648,24 @@ def test_hit():
         reset_bomb()
         game.score += addBomb3Score
         game.hitsHit += 1
+    elif tie.colliderect(razorlaser):
+        addRScore = round(200 + tie.x/5)
+        reset_tie()
+        reset_razorlaser()
+        game.score += addRScore
+        game.hitsHit += 1
+    elif tie2.colliderect(razorlaser):
+        addR2Score = round(200 + tie2.x/5)
+        reset_tie2()
+        reset_razorlaser()
+        game.score += addR2Score
+        game.hitsHit += 1
+    elif tie3.colliderect(razorlaser):
+        addR3Score = round(200 + tie3.x/5)
+        reset_tie3()
+        reset_razorlaser()
+        game.score += addR3Score
+        game.hitsHit += 1
     elif tie.colliderect(ship):
         if len(sys.argv) > 2:
             if sys.argv[1] == 'givemepowers':
@@ -681,6 +747,7 @@ def update():
     protontorp_motion()
     ion_motion()
     bomb_motion()
+    razorlaser_motion(1)
     stopScoreFromZero()
     if game.level == 1:
         if game.level1quota <= game.hitsHit:
@@ -759,6 +826,7 @@ def draw():
         laser7.draw()
         laser8.draw()
         laser9.draw()
+        razorlaser.draw()
         quadcannonblast.draw()
         ion.draw()
         protontorp.draw()
