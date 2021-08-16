@@ -55,8 +55,6 @@ class Game():
                 self.ship = shipchoice
             elif sys.argv[1] == 'ywing':
                 self.ship = shipchoice
-            elif sys.argv[1] == 'razorcrest':
-                self.ship = shipchoice
             elif sys.argv[1] == 'givemepowers':
                 self.ship = 'deethstarr'
             else:
