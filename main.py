@@ -10,9 +10,7 @@ If you encounter a bug or have a suggestion, see README.md for instructions.
 import pgzrun
 import random
 import pygame
-import os
 import sys
-import pygame.locals as pl
 from pygame.locals import *
 import time
 
@@ -126,82 +124,17 @@ ship.y = HEIGHT - ship.height/2
 bomb = Actor('bomb', (-WIDTH,-HEIGHT))
 bomb.active = False
 
-razorlaser = Actor('tielaser', (-WIDTH,-HEIGHT))
-razorlaser.active = True
 #set tie fighter speed
 tie_speed == (game.score/300) + 9
 
 
 #laser functions
-def razorlaser_motion(dir):
-    if razorlaser.active == True:
-        if dir == 1:
-            razorlaser.y -= SPEED
-        elif dir == 2:
-            razorlaser.y += SPEED
-        elif dir == 3:
-            razorlaser.x -= SPEED
-        elif dir == 4:
-            razorlaser.x += SPEED
-        else:
-            pass
-def fireRazorLaser(dir):
-    razorlaser.x = ship.x
-    razorlaser.y = ship.y - ship.height/2 - razorlaser.height/2
-def laser_motion():
-    if laser.active == True:
-        laser.y -= SPEED
-def fire():
-    laser.x = ship.x
-    laser.y = ship.y - ship.height/2 - laser.height/2
-def laser2_motion():
-    if laser2.active == True:
-        laser2.y -= SPEED
-def fire2():
-    laser2.x = ship.x
-    laser2.y = ship.y - ship.height/2 - laser2.height/2
-def laser3_motion():
-    if laser3.active == True:
-        laser3.y -= SPEED
-def fire3():
-    laser3.x = ship.x
-    laser3.y = ship.y - ship.height/2 - laser3.height/2
-def laser4_motion():
-    if laser4.active == True:
-        laser4.y -= SPEED
-def fire4():
-    laser4.x = ship.x
-    laser4.y = ship.y - ship.height/2 - laser4.height/2
-def laser5_motion():
-    if laser5.active == True:
-        laser5.y -= SPEED
-def fire5():
-    laser5.x = ship.x
-    laser5.y = ship.y - ship.height/2 - laser5.height/2
-def laser6_motion():
-    if laser6.active == True:
-        laser6.y -= SPEED
-def fire6():
-    laser6.x = ship.x
-    laser6.y = ship.y - ship.height/2 - laser6.height/2
-def laser7_motion():
-    if laser7.active == True:
-        laser7.y -= SPEED
-def fire7():
-    laser7.x = ship.x
-    laser7.y = ship.y - ship.height/2 - laser7.height/2
-def laser8_motion():
-    if laser8.active == True:
-        laser8.y -= SPEED
-def fire8():
-    laser8.x = ship.x
-    laser8.y = ship.y - ship.height/2 - laser8.height/2
-def laser9_motion():
-    if laser9.active == True:
-        laser9.y -= SPEED
-def fire9():
-    laser9.x = ship.x
-    laser9.y = ship.y - ship.height/2 - laser9.height/2
+def laser_motion(sent):
+    if sent.active == True:
+        sent.y -= SPEED
+def fire(sent):
+    sent.x = ship.x
+    sent.y = ship.y - ship.height/2 - laser.height/2
 #quad cannon functions
 def quad_motion():
     if quadcannonblast.active == True:
@@ -234,56 +167,44 @@ def fire_bomb():
 #movement and keyboard input
 def get_keyboard(SPEED):
     if keyboard.left:
-        if game.ship == 'razorcrest':
-            ship.image = 'razorcrestleft'
-            ship.x -= SPEED
-        else:
-            ship.x -= SPEED
+        ship.x -= SPEED
     elif keyboard.right:
-        if game.ship == 'razorcrest':
-            ship.image = 'razorcrestright'
-            ship.x += SPEED
-        else:
-            ship.x += SPEED
+        ship.x += SPEED
     elif keyboard.space:
-        if game.ship == 'razorcrest':
-            razorlaser.active = True
-            fireRazorLaser()
-        else:
-            if laser.active == True:
-                if laser2.active == True:
-                    if laser3.active == True:
-                        if laser4.active == True:
-                            if laser5.active == True:
-                                if laser6.active == True:
-                                    if laser7.active  == True:
-                                        if laser8.active == True:
-                                            laser9.active = True
-                                            fire9()
-                                        else:
-                                            laser8.active = True
-                                            fire8()
+        if laser.active == True:
+            if laser2.active == True:
+                if laser3.active == True:
+                    if laser4.active == True:
+                        if laser5.active == True:
+                            if laser6.active == True:
+                                if laser7.active  == True:
+                                    if laser8.active == True:
+                                        laser9.active = True
+                                        fire(laser9)
                                     else:
-                                        laser7.active = True
-                                        fire7()
+                                        laser8.active = True
+                                        fire(laser8)
                                 else:
-                                    laser6.active = True
-                                    fire6()
+                                    laser7.active = True
+                                    fire(laser7)
                             else:
-                                laser5.active = True
-                                fire5()
+                                laser6.active = True
+                                fire(laser6)
                         else:
-                            laser4.active = True
-                            fire4()
+                            laser5.active = True
+                            fire(laser5)
                     else:
-                        laser3.active = True
-                        fire3()
+                        laser4.active = True
+                        fire(laser4)
                 else:
-                    laser2.active = True
-                    fire2()
+                    laser3.active = True
+                    fire(laser3)
             else:
-                laser.active = True
-                fire()
+                laser2.active = True
+                fire(laser2)
+        else:
+            laser.active = True
+            fire(laser)
     elif keyboard.down:
         if game.view == 'splash':
             game.view = 'level-1'
@@ -301,17 +222,10 @@ def get_keyboard(SPEED):
             elif game.ship == 'ywing':
                 bomb.active = True
                 fire_bomb()
-            elif game.ship == 'razorcrest':
-                ship.image = 'razorcrestdown'
-                ship.y += SPEED
             else:
                 pass
         else:
             pass
-    elif keyboard.up:
-        if game.ship == 'razorcrest':
-            ship.image = 'razorcrest'
-            ship.y -= SPEED
     else:
         pass
 
@@ -319,24 +233,12 @@ def get_keyboard(SPEED):
 
 #resets
 #tie fighters
-def reset_tie():
-    explosion.x = tie.x
-    explosion.y = tie.y
+def reset_tie(newtie):
+    explosion.x = newtie.x
+    explosion.y = newtie.y
     explosion.inGame = True
-    tie.y = 0
-    tie.x = random.randint(0, WIDTH)
-def reset_tie2():
-    explosion.x = tie2.x
-    explosion.y = tie2.y
-    explosion.inGame = True
-    tie2.y = 0
-    tie2.x = random.randint(0,WIDTH)
-def reset_tie3():
-    explosion.x = tie3.x
-    explosion.y = tie3.y
-    explosion.inGame = True
-    tie3.y = 0
-    tie3.x = random.randint(0,WIDTH)
+    newtie.y = 0
+    newtie.x = random.randint(0, WIDTH)
 #player's ship
 def ship_kill():
     ship.x = WIDTH/2
@@ -344,48 +246,31 @@ def ship_kill():
     game.score -= 100
     game.deaths += 1
 def out_screen():
-    if ship.x > WIDTH:
+    if ship.x > WIDTH or ship.x < 0 or ship.y < 0 or ship.y > HEIGHT:
         ship_kill()
         game.score -= 100
-    elif ship.x < 0:
-        ship_kill()
-        game.score -= 100
-    elif ship.y < 0:
-        ship_kill()
-        game.score -= 100
-    elif ship.y > HEIGHT:
-        ship_kill()
-        game.score -= 100
-    else:
-        pass
+    if laser.y < 0:
+        laser.active = False
+    if laser2.y < 0:
+        laser2.active = False
+    if laser3.y < 0:
+        laser3.active = False
+    if laser4.y < 0:
+        laser4.active = False
+    if laser5.y < 0:
+        laser5.active = False
+    if laser6.y < 0:
+        laser6.active = False
+    if laser7.y < 0:
+        laser7.active = False
+    if laser8.y < 0:
+        laser8.active = False
+    if laser9.y < 0:
+        laser9.active = False
 #weaponry
-def reset_laser():
-    laser.pos = (-WIDTH, -HEIGHT)
-    laser.active = False
-def reset_laser2():
-    laser2.pos = (-WIDTH, -HEIGHT)
-    laser2.active = False
-def reset_laser3():
-    laser3.pos = (-WIDTH, -HEIGHT)
-    laser3.active = False
-def reset_laser4():
-    laser4.pos = (-WIDTH, -HEIGHT)
-    laser4.active = False
-def reset_laser5():
-    laser5.pos = (-WIDTH, -HEIGHT)
-    laser5.active = False
-def reset_laser6():
-    laser6.pos = (-WIDTH, -HEIGHT)
-    laser6.active = False
-def reset_laser7():
-    laser7.pos = (-WIDTH, -HEIGHT)
-    laser7.active = False
-def reset_laser8():
-    laser8.pos = (-WIDTH, -HEIGHT)
-    laser8.active = False
-def reset_laser9():
-    laser9.pos = (-WIDTH, -HEIGHT)
-    laser9.active = False
+def reset_laser(sentlaser):
+    sentlaser.pos = (-WIDTH, -HEIGHT)
+    sentlaser.active = False
 def reset_quad():
     quadcannonblast.pos = (-WIDTH, -HEIGHT)
     quadcannonblast.active = False
@@ -398,178 +283,174 @@ def reset_torp():
 def reset_bomb():
     bomb.pos = (-WIDTH, -HEIGHT)
     bomb.active = False
-def reset_razorlaser():
-    razorlaser.pos = (-WIDTH,-HEIGHT)
-    razorlaser.active = False
-
 
 #check for hits
 def test_hit():
     if tie.colliderect(laser):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser()
+        reset_tie(tie)
+        reset_laser(laser)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser()
+        reset_tie(tie3)
+        reset_laser(laser)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser2):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser2()
+        reset_tie(tie)
+        reset_laser(laser2)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser2):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser2()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser2)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser2):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser2()
+        reset_tie(tie3)
+        reset_laser(laser2)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser3):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser3()
+        reset_tie(tie)
+        reset_laser(laser3)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser3):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser3()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser3)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser3):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser3()
+        reset_tie(tie3)
+        reset_laser(laser3)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser4):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser4()
+        reset_tie(tie)
+        reset_laser(laser4)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser4):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser4()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser4)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser4):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser4()
+        reset_tie(tie3)
+        reset_laser(laser4)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser5):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser5()
+        reset_tie(tie)
+        reset_laser(laser5)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser5):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser5()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser5)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser5):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser5()
+        reset_tie(tie3)
+        reset_laser(laser5)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser6):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser6()
+        reset_tie(tie)
+        reset_laser(laser6)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser6):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser6()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser6)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser6):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser6()
+        reset_tie(tie3)
+        reset_laser(laser6)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser7):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser7()
+        reset_tie(tie)
+        reset_laser(laser7)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser7):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser7()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser7)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser7):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser7()
+        reset_tie(tie3)
+        reset_laser(laser7)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser8):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser8()
+        reset_tie(tie)
+        reset_laser(laser8)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser8):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser8()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser8)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser8):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser8()
+        reset_tie(tie3)
+        reset_laser(laser8)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(laser9):
         addScore = round(150 + tie.x / 5)
-        reset_tie()
-        reset_laser9()
+        reset_tie(tie)
+        reset_laser(laser9)
         game.score += addScore
         game.hitsHit += 1
     elif tie2.colliderect(laser9):
-        add2Score = round(150 + tie3.x / 5)
-        reset_tie2()
-        reset_laser9()
+        add2Score = round(150 + tie2.x / 5)
+        reset_tie(tie2)
+        reset_laser(laser9)
         game.score += add2Score
         game.hitsHit += 1
     elif tie3.colliderect(laser9):
         add3Score = round(150 + tie3.x / 5)
-        reset_tie3()
-        reset_laser9()
+        reset_tie(tie3)
+        reset_laser(laser9)
         game.score += add3Score
         game.hitsHit += 1
     elif tie.colliderect(quadcannonblast):
         addQuadScore = round(100 + tie.x / 5)
-        reset_tie()
+        reset_tie(tie)
         game.quaduse += 1
         game.score += addQuadScore
         if game.quaduse == 2:
@@ -578,123 +459,105 @@ def test_hit():
         game.hitsHit += 1
     elif tie2.colliderect(quadcannonblast):
         addQuad2Score = round(100 + tie2.x / 5)
-        reset_tie2()
+        reset_tie(tie2)
         game.quaduse += 1
-        game.score += 100
+        game.score += addQuad2Score
         if game.quaduse == 2:
             reset_quad()
             game.quaduse -= 2
         game.hitsHit += 1
     elif tie3.colliderect(quadcannonblast):
         addQuad3Score = round(100 + tie3.x / 5)
-        reset_tie3()
+        reset_tie(tie3)
         game.quaduse += 1
-        game.score += 100
+        game.score += addQuad3Score
         if game.quaduse == 2:
             reset_quad()
             game.quaduse -= 2
         game.hitsHit += 1
     elif tie.colliderect(ion):
         addIonScore = round(100 + ((tie3.x + tie2.x + tie.x) / 5))
-        reset_tie()
-        reset_tie2()
-        reset_tie3()
+        reset_tie(tie)
+        reset_tie(tie2)
+        reset_tie(tie3)
         game.score += addIonScore
         game.hitsHit += 3
     elif tie2.colliderect(ion):
         addIon2Score = round(100 + ((tie3.x + tie2.x + tie.x) / 5))
-        reset_tie()
-        reset_tie2()
-        reset_tie3()
+        reset_tie(tie)
+        reset_tie(tie2)
+        reset_tie(tie3)
         game.score += addIon2Score
         game.hitsHit += 3
     elif tie3.colliderect(ion):
         addIon3Score = round(100 + ((tie3.x + tie2.x + tie.x) / 5))
-        reset_tie()
-        reset_tie2()
-        reset_tie3()
+        reset_tie(tie)
+        reset_tie(tie2)
+        reset_tie(tie3)
         game.score += addIon3Score
         game.hitsHit += 3
     elif tie.colliderect(protontorp):
         addProtonScore = round(100 + tie.x / 5)
-        reset_tie()
+        reset_tie(tie)
         game.score += addProtonScore
         game.hitsHit += 1
     elif tie2.colliderect(protontorp):
         addProton2Score = round(100 + tie2.x / 5)
-        reset_tie2()
+        reset_tie(tie2)
         game.score += addProton2Score
         game.hitsHit += 1
     elif tie3.colliderect(protontorp):
         addProton3Score = round(100 + tie3.x / 5)
-        reset_tie3()
+        reset_tie(tie3)
         game.score += addProton3Score
         game.hitsHit += 1
     elif tie.colliderect(bomb):
         addBombScore = round(100 + tie.x/5)
-        reset_tie()
+        reset_tie(tie)
         reset_bomb()
         game.score += addBombScore
         game.hitsHit += 1
     elif tie2.colliderect(bomb):
         addBomb2Score = round(100 + tie2.x/5)
-        reset_tie2()
+        reset_tie(tie2)
         reset_bomb()
         game.score += addBomb2Score
         game.hitsHit += 1
     elif tie3.colliderect(bomb):
         addBomb3Score = round(100 + tie3.x/5)
-        reset_tie3()
+        reset_tie(tie3)
         reset_bomb()
         game.score += addBomb3Score
-        game.hitsHit += 1
-    elif tie.colliderect(razorlaser):
-        addRScore = round(200 + tie.x/5)
-        reset_tie()
-        reset_razorlaser()
-        game.score += addRScore
-        game.hitsHit += 1
-    elif tie2.colliderect(razorlaser):
-        addR2Score = round(200 + tie2.x/5)
-        reset_tie2()
-        reset_razorlaser()
-        game.score += addR2Score
-        game.hitsHit += 1
-    elif tie3.colliderect(razorlaser):
-        addR3Score = round(200 + tie3.x/5)
-        reset_tie3()
-        reset_razorlaser()
-        game.score += addR3Score
         game.hitsHit += 1
     elif tie.colliderect(ship):
         if len(sys.argv) > 2:
             if sys.argv[1] == 'givemepowers':
-                reset_tie()
+                reset_tie(tie)
             else:
-                reset_tie()
+                reset_tie(tie)
                 ship_kill()
         else:
-            reset_tie()
+            reset_tie(tie)
             ship_kill()
     elif tie2.colliderect(ship):
         if len(sys.argv) > 2:
             if sys.argv[1] == 'givemepowers':
-                reset_tie2()
+                reset_tie(tie2)
             else:
-                reset_tie2()
+                reset_tie(tie2)
                 ship_kill()
         else:
-            reset_tie2()
+            reset_tie(tie2)
             ship_kill()
     elif tie3.colliderect(ship):
         if len(sys.argv) > 2:
             if sys.argv[1] == 'givemepowers':
-                reset_tie3()
+                reset_tie(tie3)
             else:
-                reset_tie3()
+                reset_tie(tie3)
                 ship_kill()
         else:
-            reset_tie3()
+            reset_tie(tie3)
             ship_kill()
     else:
         pass
@@ -712,17 +575,17 @@ def stopScoreFromZero():
 def tie_motion():
     tie.y += tie_speed/3
     if tie.y > HEIGHT:
-        reset_tie()
+        reset_tie(tie)
         game.score -= 200
         game.tiesLet += 1
     tie2.y += tie_speed/3
     if tie2.y > HEIGHT:
-        reset_tie2()
+        reset_tie(tie2)
         game.score -= 200
         game.tiesLet += 1
     tie3.y += tie_speed/3
     if tie3.y > HEIGHT:
-        reset_tie3()
+        reset_tie(tie3)
         game.score -= 200
         game.tiesLet += 1
 
@@ -732,22 +595,21 @@ def tie_motion():
 def update():
     get_keyboard(SPEED)
     tie_motion()
-    laser_motion()
-    laser2_motion()
-    laser3_motion()
-    laser4_motion()
-    laser5_motion()
-    laser6_motion()
-    laser7_motion()
-    laser8_motion()
-    laser9_motion()
+    laser_motion(laser)
+    laser_motion(laser2)
+    laser_motion(laser3)
+    laser_motion(laser4)
+    laser_motion(laser5)
+    laser_motion(laser6)
+    laser_motion(laser7)
+    laser_motion(laser8)
+    laser_motion(laser9)
     test_hit()
     out_screen()
     quad_motion()
     protontorp_motion()
     ion_motion()
     bomb_motion()
-    razorlaser_motion(1)
     stopScoreFromZero()
     if game.level == 1:
         if game.level1quota <= game.hitsHit:
@@ -767,42 +629,6 @@ def update():
         explosion.inGame = False
         explosion.x = -WIDTH
         explosion.y = -HEIGHT
-    else:
-        pass
-    if laser.y < 0:
-        laser.active = False
-    else:
-        pass
-    if laser2.y < 0:
-        laser2.active = False
-    else:
-        pass
-    if laser3.y < 0:
-        laser3.active = False
-    else:
-        pass
-    if laser4.y < 0:
-        laser4.active = False
-    else:
-        pass
-    if laser5.y < 0:
-        laser5.active = False
-    else:
-        pass
-    if laser6.y < 0:
-        laser6.active = False
-    else:
-        pass
-    if laser7.y < 0:
-        laser7.active = False
-    else:
-        pass
-    if laser8.y < 0:
-        laser8.active = False
-    else:
-        pass
-    if laser9.y < 0:
-        laser9.active = False
     else:
         pass
         
@@ -826,7 +652,6 @@ def draw():
         laser7.draw()
         laser8.draw()
         laser9.draw()
-        razorlaser.draw()
         quadcannonblast.draw()
         ion.draw()
         protontorp.draw()
