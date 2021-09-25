@@ -44,7 +44,6 @@ class Game():
         self.hitsHit = 0
         self.deaths = 0
         self.end = False
-        #self.view = 'level-1'     #to test game mechanics - must be set to 'splash' in order for full functionality to be used
         self.view = 'splash'
         if len(sys.argv) >= 2:
             if sys.argv[1] == 'xwing':
