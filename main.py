@@ -585,7 +585,7 @@ def tie_motion():
 
 
 # execute main functions
-#update
+# update
 def update():
     get_keyboard(SPEED)
     tie_motion()
