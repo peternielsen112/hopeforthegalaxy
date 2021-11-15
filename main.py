@@ -15,7 +15,7 @@ from pygame.locals import *
 import time
 
 
-#constants
+# Constants
 WIDTH = 585
 HEIGHT = 700
 SPEED = 5
@@ -32,7 +32,7 @@ pygame.mixer.music.play(loops=-1)
 
 t1 = time.time()
 print(t1)
-#game attributes [score, level, ship, etc]
+# game attributes [score, level, ship, etc]
 class Game():
     def __init__(self):
         self.level1quota = 150
@@ -75,18 +75,18 @@ def game_end():
     print(f'\n\n\n\nFinal Stats:\n\nScore: {game.score}\nTies Hit: {game.hitsHit}\nDeaths: {game.deaths}\nTies Let Through: {game.tiesLet}\nGame Total Time: {t3}')
     sys.exit()
 
-#actors
+# actors
 explosion = Actor('explosion', (-WIDTH, -HEIGHT))
 explosion.inGame = False
 explosion.times = 0
-#tie fighters
+# tie fighters
 tie = Actor('tiefighter', (tiestart, 0))
 tie.y = tie.height/2
 tie2 = Actor('tiefighter', (tiestart, 0))
 tie2.y = tie2.height/2
 tie3 = Actor('tiefighter', (tiestart, 0))
 tie3.y = tie3.height/2
-#standard laser, universal
+# standard laser, universal
 laser = Actor('laser', (-WIDTH, -HEIGHT))
 laser.active = False
 laser2 = Actor('laser', (-WIDTH, -HEIGHT))
@@ -105,16 +105,16 @@ laser8 = Actor('laser', (-WIDTH, -HEIGHT))
 laser8.active = False
 laser9 = Actor('laser', (-WIDTH, -HEIGHT))
 laser9.active = False
-#quad cannon blast, for the Millenium Falcon's ability
+# quad cannon blast, for the Millenium Falcon's ability
 quadcannonblast = Actor('morelaser', (-WIDTH, -HEIGHT))
 quadcannonblast.active = False
-#ion blast, for the a=wing ability
+# ion blast, for the a=wing ability
 ion = Actor('ion', (-WIDTH, -HEIGHT))
 ion.active = False
-#proton torpedo, for the x-wing ability
+# proton torpedo, for the x-wing ability
 protontorp = Actor('torp', (-WIDTH, -HEIGHT))
 protontorp.active = False
-#x-wing
+# x-wing
 ship = Actor(game.ship, (WIDTH/2, HEIGHT))
 ship.y = HEIGHT - ship.height/2
 
@@ -122,28 +122,28 @@ bomb = Actor('bomb', (-WIDTH,-HEIGHT))
 bomb.active = False
 
 
-#laser functions
+# laser functions
 def laser_motion(sent):
     if sent.active is True:
         sent.y -= SPEED
 def fire(sent):
     sent.x = ship.x
     sent.y = ship.y - ship.height/2 - laser.height/2
-#quad cannon functions
+# quad cannon functions
 def quad_motion():
     if quadcannonblast.active is True:
         quadcannonblast.y -= SPEED
 def fire_quad():
     quadcannonblast.x = ship.x
     quadcannonblast.y = ship.y - ship.height/2 - quadcannonblast.height/2
-#ion blast functions
+# ion blast functions
 def ion_motion():
     if ion.active is True:
         ion.y -= SPEED
 def fire_ion():
     ion.x = ship.x
     ion.y = ship.y - ship.height/2 - ion.height/2
-#proton torpedo functions
+# proton torpedo functions
 def protontorp_motion():
     if protontorp.active is True:
         protontorp.y -= SPEED
@@ -158,7 +158,7 @@ def fire_bomb():
     bomb.y = ship.y-ship.height/2-protontorp.height/2
 
 
-#movement and keyboard input
+# movement and keyboard input
 def get_keyboard(SPEED):
     if keyboard.left:
         ship.x -= SPEED
@@ -225,15 +225,15 @@ def get_keyboard(SPEED):
 
 
 
-#resets
-#tie fighters
+# resets
+# tie fighters
 def reset_tie(newtie):
     explosion.x = newtie.x
     explosion.y = newtie.y
     explosion.inGame = True
     newtie.y = 0
     newtie.x = random.randint(0, WIDTH)
-#player's ship
+# player's ship
 def ship_kill():
     ship.x = WIDTH/2
     ship.y = HEIGHT - ship.height/2
@@ -261,7 +261,7 @@ def out_screen():
         laser8.active = False
     if laser9.y < 0:
         laser9.active = False
-#weaponry
+# weaponry
 def reset_laser(sentlaser):
     sentlaser.pos = (-WIDTH, -HEIGHT)
     sentlaser.active = False
@@ -278,7 +278,7 @@ def reset_bomb():
     bomb.pos = (-WIDTH, -HEIGHT)
     bomb.active = False
 
-#check for hits
+# check for hits
 def test_hit():
     if tie.colliderect(laser):
         addScore = round(150 + tie.x / 5)
@@ -564,8 +564,8 @@ def stopScoreFromZero():
     else:
         pass
 
-#motion
-#tie fighters
+# motion
+# tie fighters
 def tie_motion():
     tie.y += tie_speed/3
     if tie.y > HEIGHT:
@@ -584,7 +584,7 @@ def tie_motion():
         game.tiesLet += 1
 
 
-#execute main functions
+# execute main functions
 #update
 def update():
     get_keyboard(SPEED)
@@ -628,7 +628,7 @@ def update():
     tie_speed = (game.score / 300) + 9
         
         
-#draw
+# The draw function
 def draw():
     if game.view == 'level-1':
         screen.clear()
@@ -663,7 +663,7 @@ def draw():
         pass
 
 
-#wrap up
+# Wrap up and run with pgzrun.go()
 pgzrun.go()
 
 game_end()
