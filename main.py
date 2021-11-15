@@ -121,9 +121,6 @@ ship.y = HEIGHT - ship.height/2
 bomb = Actor('bomb', (-WIDTH,-HEIGHT))
 bomb.active = False
 
-#set tie fighter speed
-tie_speed == (game.score/300) + 9
-
 
 #laser functions
 def laser_motion(sent):
@@ -628,6 +625,7 @@ def update():
         explosion.y = -HEIGHT
     else:
         pass
+    tie_speed = (game.score / 300) + 9
         
         
 #draw
