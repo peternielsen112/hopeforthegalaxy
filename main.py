@@ -73,7 +73,7 @@ def game_end():
     else:
         pass
     print(f'\n\n\n\nFinal Stats:\n\nScore: {game.score}\nTies Hit: {game.hitsHit}\nDeaths: {game.deaths}\nTies Let Through: {game.tiesLet}\nGame Total Time: {t3}')
-    quit()
+    sys.exit()
 
 #actors
 explosion = Actor('explosion', (-WIDTH, -HEIGHT))
