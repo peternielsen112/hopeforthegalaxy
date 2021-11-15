@@ -12,7 +12,7 @@ import random
 import pygame
 import sys
 import time
-from pgzero.builtins import Actor # , animate, keyboard
+from pgzero.builtins import Actor, keyboard
 
 # Constants
 WIDTH = 585
