@@ -69,7 +69,7 @@ def game_end():
     t2 = time.time()
     t3 = t2-t1
     if game.end == True:
-        print(f'\n\nLevel 1 Complete!')
+        print('\n\nLevel 1 Complete!')
     else:
         pass
     print(f'\n\n\n\nFinal Stats:\n\nScore: {game.score}\nTies Hit: {game.hitsHit}\nDeaths: {game.deaths}\nTies Let Through: {game.tiesLet}\nGame Total Time: {t3}')
