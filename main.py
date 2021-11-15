@@ -11,9 +11,8 @@ import pgzrun
 import random
 import pygame
 import sys
-from pygame.locals import *
 import time
-
+from pgzero.builtins import Actor # , animate, keyboard
 
 # Constants
 WIDTH = 585
