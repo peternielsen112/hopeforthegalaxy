@@ -68,7 +68,7 @@ def game_end():
     time.sleep(1)
     t2 = time.time()
     t3 = t2-t1
-    if game.end == True:
+    if game.end is True:
         print('\n\nLevel 1 Complete!')
     else:
         pass
@@ -124,34 +124,34 @@ bomb.active = False
 
 #laser functions
 def laser_motion(sent):
-    if sent.active == True:
+    if sent.active is True:
         sent.y -= SPEED
 def fire(sent):
     sent.x = ship.x
     sent.y = ship.y - ship.height/2 - laser.height/2
 #quad cannon functions
 def quad_motion():
-    if quadcannonblast.active == True:
+    if quadcannonblast.active is True:
         quadcannonblast.y -= SPEED
 def fire_quad():
     quadcannonblast.x = ship.x
     quadcannonblast.y = ship.y - ship.height/2 - quadcannonblast.height/2
 #ion blast functions
 def ion_motion():
-    if ion.active == True:
+    if ion.active is True:
         ion.y -= SPEED
 def fire_ion():
     ion.x = ship.x
     ion.y = ship.y - ship.height/2 - ion.height/2
 #proton torpedo functions
 def protontorp_motion():
-    if protontorp.active == True:
+    if protontorp.active is True:
         protontorp.y -= SPEED
 def fire_protontorp():
     protontorp.x = ship.x
     protontorp.y = ship.y - ship.height/2 - protontorp.height/2
 def bomb_motion():
-    if bomb.active == True:
+    if bomb.active is True:
         bomb.y -= SPEED
 def fire_bomb():
     bomb.x = ship.x
@@ -165,14 +165,14 @@ def get_keyboard(SPEED):
     elif keyboard.right:
         ship.x += SPEED
     elif keyboard.space:
-        if laser.active == True:
-            if laser2.active == True:
-                if laser3.active == True:
-                    if laser4.active == True:
-                        if laser5.active == True:
-                            if laser6.active == True:
-                                if laser7.active  == True:
-                                    if laser8.active == True:
+        if laser.active is True:
+            if laser2.active is True:
+                if laser3.active is True:
+                    if laser4.active is True:
+                        if laser5.active is True:
+                            if laser6.active is True:
+                                if laser7.active is True:
+                                    if laser8.active is True:
                                         laser9.active = True
                                         fire(laser9)
                                     else:
@@ -610,11 +610,11 @@ def update():
             game.end = True
     else:
         pass
-    if game.end == True:
+    if game.end is True:
         game_end()
     else:
         pass
-    if explosion.inGame == True:
+    if explosion.inGame is True:
         explosion.times += 1
     else:
         pass
