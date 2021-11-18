@@ -12,7 +12,11 @@ import random
 import pygame
 import sys
 import time
+from pgzero.screen import Screen
 from pgzero.builtins import Actor, keyboard
+
+
+screen = Screen()
 
 # Constants
 WIDTH = 585
