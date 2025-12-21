@@ -17,7 +17,6 @@
   - [Screens](#screens)
   - [Movement and Interaction](#movement-and-interaction)
   - [Scoring](#scoring)
-- [Development Timeline](#development-timeline)
 - [Thanks](#thanks)
 
 ---
@@ -91,18 +90,6 @@ All base scores will have the target Tie Fighter's x value *(how far it is away 
 **Score Logging**:
 
 Every time a Tie Fighter is killed, the **Tie's number is logged** along with the **number of points gained** by the player for the hit. It also logs **what weapon killed it**. *(These logs are printed on the console.)*
-
----
-
-## Development Timeline
-*Disclaimer: all data on this timeline is a projection.*
-
-- **September 2021**: Added special abilities for Y-Wing, Razor Crest.
-- **October 2021**: Options for more Tie Fighters and adjustable quota
-- **November 2021**: Added levels
-- **December 2021**: Holiday edition
-- **January 2022**: Added ships - B-Wing, V-Wing, Jedi Starfighter
-- **No Date**: Death limit, explosion when killed
 
 ---
 
